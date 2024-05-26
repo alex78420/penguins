@@ -41,7 +41,7 @@ Le projet "CY-FISH" consiste en un jeu de type plateforme où entre 2 et 6 joueu
 
 ### Organisation de l'Équipe
 
-Pour communiquer et collaborer, nous avons utilisé GitHub pour l'hébergement du code et Discord pour la discussion. Alexandre utilise Ubuntu avec WSL sur Windows, tandis que Aymane et Reine-Marie utilisent macOS.
+Pour communiquer et collaborer, nous avons utilisé GitHub pour l'hébergement du code, nous faisions chacun nos fonctions car on s'était séparer les tâches et ensuite on a tout rassemblé en une seule main file pour pouvoir run le code.  On a utilisé discord pour la discussion. Alexandre utilise Windows, tandis que Aymane et Reine-Marie utilisent macOS.
 
 ### Répartition des Tâches
 
