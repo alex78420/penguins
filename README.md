@@ -46,7 +46,7 @@ Pour exécuter le jeu, utilisez la commande suivante après la compilation :
 
 3. **Tour de jeu** :
    - À chaque tour, le joueur sélectionne un de ses pingouins à déplacer. 
-   - Les pingouins sont affichés avec leurs coordonnées (`y` et `x`).
+   - Les pingouins sont affichés avec leurs coordonnées (`y` et `x`) et choisissez le pinguoin avec y, u, i, o.
    - Le joueur choisit la direction et le nombre de cases à déplacer.
 
 4. **Déplacements** :
