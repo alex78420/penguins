@@ -190,7 +190,7 @@ Player *createTabPlayers(Tile **board, int nbPlayer) {
 
 void showTile(Tile tile, Player *player, int nbPlayer) {     // Print a "tile" with the coordinates stored in the "Tile" parameter
     if (tile.isAlive == 0) {
-        printf("XXX ");
+        printf("XX ");
         return;
     }
 
