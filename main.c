@@ -228,9 +228,9 @@ int tileDontExist(int y, int x) {       // If tile don't exist, return 0. Else, 
     }
 }
 
-void movePreview(Tile **board, Player *player, Penguin *virtualPenguin, int touch, int nbPlayer, int movementNb, int* retry, int currentPlayer, int turn) {
+void movePenguin(Tile **board, Player *player, Penguin *virtualPenguin, int touch, int nbPlayer, int movementNb, int* retry, int currentPlayer, int turn) {
     int n = 0;                                          // n is a variable for moving from an iceberg to another
-    int isBlocked = 0;                                  // Can the penguin move ? (If the next tile is either not on the board, dead or taken by another penguin) 
+    int isBlocked = 0;                                  // Can the penguin move? (If the next tile is either not on the board, dead or taken by another penguin) 
     int initialPosX = virtualPenguin->tileX;            // Save the original x position of the virtual penguin
     int initialPosY = virtualPenguin->tileY;            // Save the original y position of the virtual penguin
 
@@ -415,46 +415,12 @@ void movePreview(Tile **board, Player *player, Penguin *virtualPenguin, int touc
             break;
     }
 
-    showIceFloe(board, player, nbPlayer);
     if(isBlocked == 1){                         // if the penguin is blocked (ie the movement wanted by user is impossible)
         *retry = 1;                             // the user will have to choose another movement
         printf("This move isn't valid, please choose another move.\n");
         virtualPenguin->tileY = initialPosY;
         virtualPenguin->tileX = initialPosX;
     }
-}
-
-void movePenguin(Tile **board, Player *player, Penguin *virtualPenguin, int nbPlayer, int currentPlayer, int turn) {
-    int touch;              // Input from user
-    int movementNb;
-    int retry = 0;           // Did the user mess up input (pressed the wrong key)
-
-    if(!board || !player || !virtualPenguin){
-        exit(1);
-    }
-
-    do {
-        if(retry == 1){                             // If the movement requested by user is impossible
-            printf("Please press 'k' to retry.\n");   // We tell the user to press k to retry another movement
-            do{
-                touch = getchar();
-            }while(touch != 'k');
-        }
-
-        do{
-            movementNb = 0;
-            printf("Enter the number of movements you want to do (between 1 and 6), then press enter: ");
-            scanf("%d", &movementNb);
-        }while( movementNb < 1 || movementNb > 6);
-
-        retry = 0;
-        printf("You will move %d tile(s). Now move your penguin.\n", movementNb);
-        touch = getchar();
-        movePreview(board, player, virtualPenguin, touch, nbPlayer, movementNb, &retry, currentPlayer, turn);
-
-    } while ((touch != 'a' && touch != 'e' && touch != 'q' && touch != 'd' && touch != 'w' && touch != 'c') || retry == 1);
-
-    printf("Press 'l' to confirm your move or press 'k' to retry.\n");
 }
 
 void Score(Player *player, Tile *tile) {        // Add fishes collected by the player to his points
@@ -649,45 +615,25 @@ void Game(Tile **board, int* rematch) {
             printf("You chose the penguin %d\n", selectedPenguinNb+1);
             Penguin virtualPenguin = player[currentPlayer].penguin[selectedPenguinNb];
 
-            disableL = 1;
             if(!returnMenu){
-                touch = 'k';
-                passK = 1;
-            }
+                int movementNb;
+                char direction;
+                printf("Enter the direction (a, e, q, d, w, c) and the number of movements (1-6): ");
+                scanf(" %c %d", &direction, &movementNb); // Read direction and movement number
+                movePenguin(board, player, &virtualPenguin, direction, nbPlayer, movementNb, &impossibleSelection, currentPlayer, turn);
 
-            if(!returnMenu){
-                do {
-                    if(passK != 1){
-                        touch = getchar();
-                    }
+                if (!impossibleSelection) {
+                    board[player[currentPlayer].penguin[selectedPenguinNb].tileY][player[currentPlayer].penguin[selectedPenguinNb].tileX].isTherePlayer = 0;
+                    board[player[currentPlayer].penguin[selectedPenguinNb].tileY][player[currentPlayer].penguin[selectedPenguinNb].tileX].isAlive = 0;
 
-                    switch (touch) {
-                        case 'l':
-                            if(disableL == 1){
-                                break;
-                            }
+                    player[currentPlayer].penguin[selectedPenguinNb] = virtualPenguin;
+                    Score(&player[currentPlayer], &board[virtualPenguin.tileY][virtualPenguin.tileX]);
 
-                            board[player[currentPlayer].penguin[selectedPenguinNb].tileY][player[currentPlayer].penguin[selectedPenguinNb].tileX].isTherePlayer = 0;
-                            board[player[currentPlayer].penguin[selectedPenguinNb].tileY][player[currentPlayer].penguin[selectedPenguinNb].tileX].isAlive = 0;
-
-                            player[currentPlayer].penguin[selectedPenguinNb] = virtualPenguin;
-                            Score(&player[currentPlayer], &board[virtualPenguin.tileY][virtualPenguin.tileX]);
-
-                            board[virtualPenguin.tileY][virtualPenguin.tileX].isTherePlayer = 1;
-                            board[virtualPenguin.tileY][virtualPenguin.tileX].penguinColor = currentPlayer + 1;
-
-                            break;
-                        case 'k':
-                            virtualPenguin = player[currentPlayer].penguin[selectedPenguinNb];
-                            showIceFloe(board, player, nbPlayer);
-                            movePenguin(board, player, &virtualPenguin, nbPlayer, currentPlayer, turn);
-                            disableL = 0;
-                            break;
-                        default:
-                            break;
-                    }
-                    passK = 0;
-                } while ((touch != 'l' || disableL == 1) && !returnMenu);
+                    board[virtualPenguin.tileY][virtualPenguin.tileX].isTherePlayer = 1;
+                    board[virtualPenguin.tileY][virtualPenguin.tileX].penguinColor = currentPlayer + 1;
+                } else {
+                    printf("Invalid move. Please try again.\n");
+                }
             }
         }
         currentPlayer = (currentPlayer + 1) % nbPlayer;
