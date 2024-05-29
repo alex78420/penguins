@@ -57,4 +57,4 @@ Pour communiquer et collaborer, nous avons utilisé GitHub pour l'hébergement d
 
 ### Recommandations Futures
 
-Nous avons perdu beaucoup de temps à cause de la différence de systèmes d'exploitation. À l'avenir, nous privilégierons une approche en ligne, comme Lightning ou GitHub Codespaces, permettant d'avoir le même environnement d'exécution pour tous. Nous ne connaissions pas ces outils avant de commencer ce projet, mais nous les utiliserons pour nos prochains travaux afin de garantir une compatibilité et une efficacité maximales.
+Nous avons perdu beaucoup de temps à cause de la différence de systèmes d'exploitation. À l'avenir, nous privilégierons une approche en ligne, comme Lightning ou GitHub Codespaces, permettant d'avoir le même environnement d'exécution pour tous. Nous ne connaissions pas ces outils avant de commencer ce projet, mais nous les utiliserons pour nos prochains travaux afin de garantir une compatibilité et une efficacité maximale.
