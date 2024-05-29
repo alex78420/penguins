@@ -23,7 +23,8 @@ Le but de ce projet est de réaliser un jeu où des pingouins s'affrontent sur u
 Pour compiler le jeu, ouvrez votre terminal et exécutez la commande suivante :
 
 ```sh
-gcc -o runPenguinGame vscode.c
+make clean
+make
 ```
 
 #### Exécution
@@ -31,7 +32,7 @@ gcc -o runPenguinGame vscode.c
 Pour exécuter le jeu, utilisez la commande suivante après la compilation :
 
 ```sh
-./runPenguinGame
+./game
 ```
 
 ### Comment Jouer
@@ -63,8 +64,9 @@ Pour exécuter le jeu, utilisez la commande suivante après la compilation :
 ### Exemple d'Utilisation
 
 ```sh
-gcc -o runPenguinGame vscode.c
-./runPenguinGame
+make clean
+make
+./game
 ```
 
 Amusez-vous bien en jouant à ce jeu des pingouins sur un iceberg !
